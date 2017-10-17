@@ -1,24 +1,43 @@
 
-
+import java.util.Random;
 public class HasQuarterState implements State {
+
+	Random randomWinner = new Random(System.currentTimeMillis());
 	GumballMachine gumballMachine;
 	
-	public HasQuarterState (GumballMachine gumballMachine){
+	public HasQuarterState(GumballMachine gumballMachine){
 		this.gumballMachine = gumballMachine;
 	}
-	public void insertQuarter(){
+	
+	
+	@Override
+	public void insertQuarter() {
+		// TODO Auto-generated method stub
 		System.out.println("You can't insert another quarter");
 	}
-	public void ejectQuarter(){
+
+	@Override
+	public void ejectQuarter() {
+		// TODO Auto-generated method stub
 		System.out.println("Quarter returned");
-		gumballMachine.setState (gumballMachine.getNoQuarterState());
+		gumballMachine.setState(gumballMachine.getNoQuarterState());
 	}
-	public void turnCrank(){
-		System.out.println("You turned . . .");
-		gumballMachine.setState (gumballMachine.getSoldOutState());
+
+	@Override
+	public void turnCrank() {
+		// TODO Auto-generated method stub
+		System.out.println("You turned...");
+		int winner = randomWinner.nextInt(10);
+		if((winner==0) && (gumballMachine.getCount() >1)){
+			gumballMachine.setState(gumballMachine.getWinnerState());
+		}else{
+			gumballMachine.setState(gumballMachine.getSoldState() );
+		}
 	}
+
 	@Override
 	public void dispense() {
+		// TODO Auto-generated method stub
 		System.out.println("No gumball dispensed");
-		
-	}}
+	}
+}
